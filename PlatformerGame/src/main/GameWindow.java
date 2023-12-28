@@ -11,7 +11,7 @@ public class GameWindow {
 		
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.add(gamePanel);
-		jframe.setLocationRelativeTo(null);
+		jframe.setLocationRelativeTo(null);//sponing window in center
 		jframe.setVisible(true);
 	}
 }
