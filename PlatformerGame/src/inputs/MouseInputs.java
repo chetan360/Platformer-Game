@@ -6,6 +6,8 @@ import java.awt.event.MouseMotionListener;
 
 import main.GamePanel;
 
+
+
 public class MouseInputs implements MouseListener, MouseMotionListener {
 	private GamePanel gamePanel;
 	
@@ -21,7 +23,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		gamePanel.setRectPos(e.getX(), e.getY());
+		
 	}
 
 	@Override
