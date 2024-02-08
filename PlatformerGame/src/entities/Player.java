@@ -10,6 +10,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import utilz.LoadSave;
+
 public class Player extends Entity {
 	private int aniTick, aniIndex, aniSpeed = 15;
 	private int playerAction = IDLE;
@@ -30,7 +32,7 @@ public class Player extends Entity {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(animetions[playerAction][aniIndex], (int)x, (int)y, 256, 160,null);
+		g.drawImage(animetions[playerAction][aniIndex], (int)x, (int)y, 148, 80,null);
 	}
 		
 	private void updateAnimationTick() {
@@ -89,24 +91,13 @@ public class Player extends Entity {
 	}
 	
 	private void loadAnimetions() {
-		InputStream is = getClass().getResourceAsStream("/player_sprites.png");
 		
-		try {
-			BufferedImage img = ImageIO.read(is);
-			animetions = new BufferedImage[9][6];
+		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+		animetions = new BufferedImage[9][6];
 			
-			for(int j=0; j<animetions.length; j++) {
-				for(int i=0; i<animetions[j].length; i++) {
-					animetions[j][i] = img.getSubimage(i*64, j*40, 64, 40);
-				}
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch(IOException e) {
-				e.printStackTrace();
+		for(int j=0; j<animetions.length; j++) {
+			for(int i=0; i<animetions[j].length; i++) {
+				animetions[j][i] = img.getSubimage(i*64, j*40, 64, 40);
 			}
 		}
 	}

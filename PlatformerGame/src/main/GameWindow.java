@@ -21,13 +21,12 @@ public class GameWindow {
 
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
-				gamePanel.getGame().windowFocusLost();
+				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void windowLostFocus(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+				gamePanel.getGame().windowFocusLost();
 			}
 			
 		});
