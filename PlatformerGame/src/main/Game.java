@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Graphics;
-
 import gamestates.Gamestate;
 import gamestates.Menu;
 import gamestates.Playing;
@@ -13,10 +12,10 @@ public class Game implements Runnable {
 	private Thread gameThread;
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
-		
+
 	private Playing playing;
 	private Menu menu;
-	
+
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
 	public final static int TILES_IN_WIDTH = 26;
@@ -33,6 +32,7 @@ public class Game implements Runnable {
 		gamePanel.requestFocus();
 
 		startGameLoop();
+
 	}
 
 	private void initClasses() {
@@ -46,25 +46,24 @@ public class Game implements Runnable {
 	}
 
 	public void update() {
-		
-		switch(Gamestate.state) {
-			case MENU:
-				menu.update();
-				break;
-			case PLAYING:
-				playing.update();
-				break;
-			case OPTIONS:
-			case QUIT:
-				System.exit(0);
-				break;
-			default:
-				break;
+		switch (Gamestate.state) {
+		case MENU:
+			menu.update();
+			break;
+		case PLAYING:
+			playing.update();
+			break;
+		case OPTIONS:
+		case QUIT:
+		default:
+			System.exit(0);
+			break;
+
 		}
 	}
 
 	public void render(Graphics g) {
-		switch(Gamestate.state) {
+		switch (Gamestate.state) {
 		case MENU:
 			menu.draw(g);
 			break;
@@ -73,7 +72,7 @@ public class Game implements Runnable {
 			break;
 		default:
 			break;
-	}
+		}
 	}
 
 	@Override
@@ -122,15 +121,14 @@ public class Game implements Runnable {
 	}
 
 	public void windowFocusLost() {
-		if(Gamestate.state == Gamestate.PLAYING) {
+		if (Gamestate.state == Gamestate.PLAYING)
 			playing.getPlayer().resetDirBooleans();
-		}
 	}
-	
+
 	public Menu getMenu() {
 		return menu;
 	}
-	
+
 	public Playing getPlaying() {
 		return playing;
 	}
