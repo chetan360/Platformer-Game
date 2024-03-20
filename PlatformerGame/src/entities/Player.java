@@ -5,6 +5,7 @@ import static utilz.HelpMethods.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -54,14 +55,21 @@ public class Player extends Entity {
 	private int flipW = 1;
 	
 	private boolean attackChecked;
-	
 	private Playing playing;
+	
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
 		loadAnimations();
 		initHitbox(x, y, (int) (20 * Game.SCALE), (int) (27 * Game.SCALE));
 		initAttackBox();
+	}
+	
+	public void setSpawn(Point spawn) {
+		this.x = spawn.x;
+		this.y = spawn.y;
+		hitbox.x = x;
+		hitbox.y = y;
 	}
 
 	private void initAttackBox() {
