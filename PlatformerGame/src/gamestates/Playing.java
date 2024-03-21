@@ -12,6 +12,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import objects.ObjectManager;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
@@ -22,6 +23,7 @@ public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
 	private EnemyManager enemyManager;
+	private ObjectManager objectManager;
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
@@ -71,6 +73,7 @@ public class Playing extends State implements Statemethods {
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
+		objectManager = new ObjectManager(this);
 		
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
@@ -88,6 +91,7 @@ public class Playing extends State implements Statemethods {
 			levelCompletedOverlay.update();
 		} else if(!gameOver) {
 			levelManager.update();
+			objectManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
@@ -119,6 +123,7 @@ public class Playing extends State implements Statemethods {
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
+		objectManager.draw(g, xLvlOffset);
 
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
@@ -259,6 +264,10 @@ public class Playing extends State implements Statemethods {
 	
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
+	}
+	
+	public ObjectManager getObjectManager() {
+		return objectManager;
 	}
 
 }
