@@ -84,10 +84,16 @@ public class Player extends Entity {
 		updateAttackBox();
 		
 		updatePos();
+		if(moving)
+			checkPotionTouched();
 		if(attacking)
 			checkAttack();
 		updateAnimationTick();
 		setAnimation();
+	}
+
+	private void checkPotionTouched() {
+		playing.checkPotionTouched(hitbox);
 	}
 
 	private void checkAttack() {
@@ -95,6 +101,7 @@ public class Player extends Entity {
 			return;
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
+		playing.checkObjectHit(attackBox);
 	}
 
 	private void updateAttackBox() {
@@ -249,10 +256,12 @@ public class Player extends Entity {
 		
 		if(currentHealth <= 0) {
 			currentHealth = 0;
-//			game over
-			
 		} else if(currentHealth >= maxHealth)
 			currentHealth = maxHealth;
+	}
+	
+	public void changePower(int value) {
+		System.out.println("Added Power!");
 	}
 	
 	private void loadAnimations() {
