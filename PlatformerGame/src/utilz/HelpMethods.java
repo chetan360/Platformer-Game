@@ -6,7 +6,6 @@ import static utilz.Constants.ObjectConstants.*;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -15,9 +14,11 @@ import main.Game;
 import objects.Cannon;
 import objects.GameContainer;
 import objects.Potion;
+import objects.Projectile;
 import objects.Spike;
 
 public class HelpMethods {
+
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
 		if (!IsSolid(x, y, lvlData))
 			if (!IsSolid(x + width, y + height, lvlData))
@@ -38,8 +39,13 @@ public class HelpMethods {
 
 		return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
 	}
-	
-	private static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
+
+	public static boolean IsProjectileHittingLevel(Projectile p, int[][] lvlData) {
+		return IsSolid(p.getHitbox().x + p.getHitbox().width / 2, p.getHitbox().y + p.getHitbox().height / 2, lvlData);
+
+	}
+
+	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
 		if (value >= 48 || value < 0 || value != 11)
@@ -73,68 +79,57 @@ public class HelpMethods {
 	}
 
 	public static boolean IsEntityOnFloor(Rectangle2D.Float hitbox, int[][] lvlData) {
-		// Check the pixel below bottomleft and bottomright
 		if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + 1, lvlData))
 			if (!IsSolid(hitbox.x + hitbox.width, hitbox.y + hitbox.height + 1, lvlData))
 				return false;
-
 		return true;
-
 	}
 
-	/**
-	 * We just check the bottomleft of the enemy here +/- the xSpeed. We never check bottom right in case the
-	 * enemy is going to the right. It would be more correct checking the bottomleft for left direction and
-	 * bottomright for the right direction. But it wont have big effect in the game. The enemy will simply change 
-	 * direction sooner when there is an edge on the right side of the enemy, when its going right.
-	 */
 	public static boolean IsFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
-		if(xSpeed > 0)
+		if (xSpeed > 0)
 			return IsSolid(hitbox.x + hitbox.width + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 		else
 			return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 	}
-	
+
 	public static boolean CanCannonSeePlayer(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
-		int firstXTile = (int)(firstHitbox.x / Game.TILES_SIZE);
-		int secondXTile = (int)(secondHitbox.x / Game.TILES_SIZE);
-		
-		if(firstXTile > secondXTile)
+		int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
+		int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
+
+		if (firstXTile > secondXTile)
 			return IsAllTilesClear(secondXTile, firstXTile, yTile, lvlData);
 		else
 			return IsAllTilesClear(firstXTile, secondXTile, yTile, lvlData);
 	}
-	
+
 	public static boolean IsAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
-		for(int i = 0; i < xEnd - xStart; i++)
-			if(IsTileSolid(xStart + i, y, lvlData))
+		for (int i = 0; i < xEnd - xStart; i++)
+			if (IsTileSolid(xStart + i, y, lvlData))
 				return false;
-			
 		return true;
 	}
-	
-	public static boolean IsAllTileWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
-		if(IsAllTilesClear(xStart, xEnd, y, lvlData))
-			for(int i = 0; i < xEnd - xStart; i++) {
-				if(!IsTileSolid(xStart + i, y + 1, lvlData))
+
+	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
+		if (IsAllTilesClear(xStart, xEnd, y, lvlData))
+			for (int i = 0; i < xEnd - xStart; i++) {
+				if (!IsTileSolid(xStart + i, y + 1, lvlData))
 					return false;
 			}
 		return true;
 	}
-	
+
 	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
-		int firstXTile = (int)(firstHitbox.x / Game.TILES_SIZE);
-		int secondXTile = (int)(secondHitbox.x / Game.TILES_SIZE);
-		
-		if(firstXTile > secondXTile)
-			return IsAllTileWalkable(secondXTile, firstXTile, yTile, lvlData);
+		int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
+		int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
+
+		if (firstXTile > secondXTile)
+			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
 		else
-			return IsAllTileWalkable(firstXTile, secondXTile, yTile, lvlData);
+			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 	}
-	
+
 	public static int[][] GetLevelData(BufferedImage img) {
 		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
-
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
@@ -145,7 +140,7 @@ public class HelpMethods {
 			}
 		return lvlData;
 	}
-	
+
 	public static ArrayList<Crabby> GetCrabs(BufferedImage img) {
 		ArrayList<Crabby> list = new ArrayList<>();
 		for (int j = 0; j < img.getHeight(); j++)
@@ -156,11 +151,9 @@ public class HelpMethods {
 					list.add(new Crabby(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
 			}
 		return list;
-
 	}
-	
+
 	public static Point GetPlayerSpawn(BufferedImage img) {
-		ArrayList<Crabby> list = new ArrayList<>();
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
@@ -170,7 +163,7 @@ public class HelpMethods {
 			}
 		return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
 	}
-	
+
 	public static ArrayList<Potion> GetPotions(BufferedImage img) {
 		ArrayList<Potion> list = new ArrayList<>();
 		for (int j = 0; j < img.getHeight(); j++)
@@ -180,9 +173,10 @@ public class HelpMethods {
 				if (value == RED_POTION || value == BLUE_POTION)
 					list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
 			}
+
 		return list;
 	}
-	
+
 	public static ArrayList<GameContainer> GetContainers(BufferedImage img) {
 		ArrayList<GameContainer> list = new ArrayList<>();
 		for (int j = 0; j < img.getHeight(); j++)
@@ -192,11 +186,13 @@ public class HelpMethods {
 				if (value == BOX || value == BARREL)
 					list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
 			}
+
 		return list;
 	}
 
 	public static ArrayList<Spike> GetSpikes(BufferedImage img) {
 		ArrayList<Spike> list = new ArrayList<>();
+
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
@@ -204,11 +200,13 @@ public class HelpMethods {
 				if (value == SPIKE)
 					list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
 			}
+
 		return list;
 	}
-	
+
 	public static ArrayList<Cannon> GetCannons(BufferedImage img) {
 		ArrayList<Cannon> list = new ArrayList<>();
+
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
@@ -216,6 +214,7 @@ public class HelpMethods {
 				if (value == CANNON_LEFT || value == CANNON_RIGHT)
 					list.add(new Cannon(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
 			}
+
 		return list;
 	}
 

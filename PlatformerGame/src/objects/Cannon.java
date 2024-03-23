@@ -1,3 +1,4 @@
+
 package objects;
 
 import main.Game;
@@ -5,7 +6,7 @@ import main.Game;
 public class Cannon extends GameObject {
 
 	private int tileY;
-	
+
 	public Cannon(int x, int y, int objType) {
 		super(x, y, objType);
 		tileY = y / Game.TILES_SIZE;
@@ -13,13 +14,14 @@ public class Cannon extends GameObject {
 		hitbox.x -= (int) (4 * Game.SCALE);
 		hitbox.y += (int) (6 * Game.SCALE);
 	}
-	
+
 	public void update() {
-		if(doAnimation)
+		if (doAnimation)
 			updateAnimationTick();
 	}
-	
+
 	public int getTileY() {
 		return tileY;
 	}
+
 }
