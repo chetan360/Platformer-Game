@@ -19,27 +19,27 @@ public class LevelManager {
 		this.game = game;
 		importOutsideSprites();
 		levels = new ArrayList<>();
-		buildLevels();
+		buildAllLevels();
 	}
-	
+
 	public void loadNextLevel() {
 		lvlIndex++;
-		if(lvlIndex >= levels.size()) {
+		if (lvlIndex >= levels.size()) {
 			lvlIndex = 0;
-			System.out.println("no more levels! Game Completed!");
+			System.out.println("No more levels! Game Completed!");
 			Gamestate.state = Gamestate.MENU;
 		}
-		
+
 		Level newLevel = levels.get(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
-		game.getPlaying().setLvlOffset(newLevel.getLvlOffset());
+		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
 	}
 
-	private void buildLevels() {
+	private void buildAllLevels() {
 		BufferedImage[] allLevels = LoadSave.GetAllLevels();
-		for(BufferedImage img : allLevels) 
+		for (BufferedImage img : allLevels)
 			levels.add(new Level(img));
 	}
 
@@ -68,11 +68,11 @@ public class LevelManager {
 	public Level getCurrentLevel() {
 		return levels.get(lvlIndex);
 	}
-	
-	public int getAmoutOfLevels() {
+
+	public int getAmountOfLevels() {
 		return levels.size();
 	}
-	
+
 	public int getLevelIndex() {
 		return lvlIndex;
 	}

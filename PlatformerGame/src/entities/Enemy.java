@@ -4,39 +4,36 @@ import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
-import static utilz.Constants.*;
-import static utilz.Constants.Directions.*;
 
+import static utilz.Constants.Directions.*;
+import static utilz.Constants.*;
 
 import main.Game;
 
 public abstract class Enemy extends Entity {
 	protected int enemyType;
-	
 	protected boolean firstUpdate = true;
-	
-	protected float walkSpeed = 0.35f * Game.SCALE;
 	protected int walkDir = LEFT;
 	protected int tileY;
 	protected float attackDistance = Game.TILES_SIZE;
 	protected boolean active = true;
 	protected boolean attackChecked;
-	
-	
+
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
 		this.enemyType = enemyType;
+
 		maxHealth = GetMaxHealth(enemyType);
 		currentHealth = maxHealth;
 		walkSpeed = Game.SCALE * 0.35f;
 	}
-	
-	protected void firstUpdatweCheck(int[][] lvlData) {
+
+	protected void firstUpdateCheck(int[][] lvlData) {
 		if (!IsEntityOnFloor(hitbox, lvlData))
 			inAir = true;
 		firstUpdate = false;
 	}
-	
+
 	protected void updateInAir(int[][] lvlData) {
 		if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
 			hitbox.y += airSpeed;
@@ -47,7 +44,7 @@ public abstract class Enemy extends Entity {
 			tileY = (int) (hitbox.y / Game.TILES_SIZE);
 		}
 	}
-	
+
 	protected void move(int[][] lvlData) {
 		float xSpeed = 0;
 
@@ -64,31 +61,32 @@ public abstract class Enemy extends Entity {
 
 		changeWalkDir();
 	}
-	
-	protected void turnTowordsPlayer(Player player) {
-		if(player.hitbox.x > hitbox.x)
+
+	protected void turnTowardsPlayer(Player player) {
+		if (player.hitbox.x > hitbox.x)
 			walkDir = RIGHT;
 		else
 			walkDir = LEFT;
 	}
 
 	protected boolean canSeePlayer(int[][] lvlData, Player player) {
-		int playerTileY = (int)(player.getHitbox().y / Game.TILES_SIZE);
-		if(playerTileY == tileY)
-			if(isPlayerInRange(player)) {
-				if(IsSightClear(lvlData, hitbox, player.hitbox, tileY))
+		int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
+		if (playerTileY == tileY)
+			if (isPlayerInRange(player)) {
+				if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))
 					return true;
 			}
+
 		return false;
 	}
 
 	protected boolean isPlayerInRange(Player player) {
-		int absValue = (int)Math.abs(player.hitbox.x - hitbox.x);
+		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return absValue <= attackDistance * 5;
 	}
-	
+
 	protected boolean isPlayerCloseForAttack(Player player) {
-		int absValue = (int)Math.abs(player.hitbox.x - hitbox.x);
+		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return absValue <= attackDistance;
 	}
 
@@ -97,21 +95,22 @@ public abstract class Enemy extends Entity {
 		aniTick = 0;
 		aniIndex = 0;
 	}
-	
+
 	public void hurt(int amount) {
 		currentHealth -= amount;
-		if(currentHealth <= 0)
+		if (currentHealth <= 0)
 			newState(DEAD);
-		else 
+		else
 			newState(HIT);
 	}
-	
-	protected void checkEnemyHit(Rectangle2D.Float attackBox, Player player) {
-		if(attackBox.intersects(player.hitbox))
+
+	protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
+		if (attackBox.intersects(player.hitbox))
 			player.changeHealth(-GetEnemyDmg(enemyType));
 		attackChecked = true;
+
 	}
-	
+
 	protected void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= ANI_SPEED) {
@@ -119,8 +118,8 @@ public abstract class Enemy extends Entity {
 			aniIndex++;
 			if (aniIndex >= GetSpriteAmount(enemyType, state)) {
 				aniIndex = 0;
-				
-				switch(state) {
+
+				switch (state) {
 				case ATTACK, HIT -> state = IDLE;
 				case DEAD -> active = false;
 				}
@@ -133,9 +132,8 @@ public abstract class Enemy extends Entity {
 			walkDir = RIGHT;
 		else
 			walkDir = LEFT;
-
 	}
-	
+
 	public void resetEnemy() {
 		hitbox.x = x;
 		hitbox.y = y;
@@ -144,9 +142,9 @@ public abstract class Enemy extends Entity {
 		newState(IDLE);
 		active = true;
 		airSpeed = 0;
-		
 	}
-	
+
+
 	public boolean isActive() {
 		return active;
 	}
