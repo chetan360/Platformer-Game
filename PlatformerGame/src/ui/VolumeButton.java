@@ -33,7 +33,7 @@ public class VolumeButton extends PauseButton {
 			imgs[i] = temp.getSubimage(i * VOLUME_DEFAULT_WIDTH, 0, VOLUME_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
 
 		slider = temp.getSubimage(3 * VOLUME_DEFAULT_WIDTH, 0, SLIDER_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
-		
+
 	}
 
 	public void update() {
@@ -59,9 +59,9 @@ public class VolumeButton extends PauseButton {
 			buttonX = maxX;
 		else
 			buttonX = x;
-		
 		updateFloatValue();
 		bounds.x = buttonX - VOLUME_WIDTH / 2;
+
 	}
 
 	private void updateFloatValue() {
@@ -90,7 +90,7 @@ public class VolumeButton extends PauseButton {
 	public void setMousePressed(boolean mousePressed) {
 		this.mousePressed = mousePressed;
 	}
-	
+
 	public float getFloatValue() {
 		return floatValue;
 	}

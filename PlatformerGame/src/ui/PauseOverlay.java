@@ -7,19 +7,16 @@ import java.awt.image.BufferedImage;
 import gamestates.Gamestate;
 import gamestates.Playing;
 import main.Game;
-import utilz.Constants;
 import utilz.LoadSave;
-import static utilz.Constants.UI.PauseButtons.*;
 import static utilz.Constants.UI.URMButtons.*;
-import static utilz.Constants.UI.VolumeButtons.*;
 
 public class PauseOverlay {
 
 	private Playing playing;
 	private BufferedImage backgroundImg;
 	private int bgX, bgY, bgW, bgH;
-	private UrmButton menuB, replayB, unpauseB;
 	private AudioOptions audioOptions;
+	private UrmButton menuB, replayB, unpauseB;
 
 	public PauseOverlay(Playing playing) {
 		this.playing = playing;
@@ -45,15 +42,16 @@ public class PauseOverlay {
 		bgH = (int) (backgroundImg.getHeight() * Game.SCALE);
 		bgX = Game.GAME_WIDTH / 2 - bgW / 2;
 		bgY = (int) (25 * Game.SCALE);
-
 	}
 
 	public void update() {
+
 		menuB.update();
 		replayB.update();
 		unpauseB.update();
-		
+
 		audioOptions.update();
+
 	}
 
 	public void draw(Graphics g) {
@@ -64,7 +62,7 @@ public class PauseOverlay {
 		menuB.draw(g);
 		replayB.draw(g);
 		unpauseB.draw(g);
-		
+
 		audioOptions.draw(g);
 
 	}
@@ -80,7 +78,7 @@ public class PauseOverlay {
 			replayB.setMousePressed(true);
 		else if (isIn(e, unpauseB))
 			unpauseB.setMousePressed(true);
-		else 
+		else
 			audioOptions.mousePressed(e);
 	}
 
@@ -88,7 +86,7 @@ public class PauseOverlay {
 		if (isIn(e, menuB)) {
 			if (menuB.isMousePressed()) {
 				playing.resetAll();
-				playing.setGameState(Gamestate.MENU);
+				playing.setGamestate(Gamestate.MENU);
 				playing.unpauseGame();
 			}
 		} else if (isIn(e, replayB)) {
@@ -101,25 +99,26 @@ public class PauseOverlay {
 				playing.unpauseGame();
 		} else
 			audioOptions.mouseReleased(e);
-			
+
 		menuB.resetBools();
 		replayB.resetBools();
 		unpauseB.resetBools();
+
 	}
 
 	public void mouseMoved(MouseEvent e) {
 		menuB.setMouseOver(false);
 		replayB.setMouseOver(false);
 		unpauseB.setMouseOver(false);
+
 		if (isIn(e, menuB))
 			menuB.setMouseOver(true);
 		else if (isIn(e, replayB))
 			replayB.setMouseOver(true);
 		else if (isIn(e, unpauseB))
 			unpauseB.setMouseOver(true);
-		else 
+		else
 			audioOptions.mouseMoved(e);
-
 	}
 
 	private boolean isIn(MouseEvent e, PauseButton b) {

@@ -27,7 +27,6 @@ public class MenuButton {
 
 	private void initBounds() {
 		bounds = new Rectangle(xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
-
 	}
 
 	private void loadImgs() {
@@ -68,7 +67,7 @@ public class MenuButton {
 	public Rectangle getBounds() {
 		return bounds;
 	}
-
+ 
 	public void applyGamestate() {
 		Gamestate.state = state;
 	}
@@ -77,8 +76,8 @@ public class MenuButton {
 		mouseOver = false;
 		mousePressed = false;
 	}
-
 	public Gamestate getState() {
 		return state;
 	}
+
 }

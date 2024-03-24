@@ -8,6 +8,7 @@ import inputs.MouseInputs;
 import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
+@SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
 	private MouseInputs mouseInputs;

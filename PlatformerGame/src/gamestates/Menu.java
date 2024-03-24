@@ -20,6 +20,7 @@ public class Menu extends State implements Statemethods {
 		loadButtons();
 		loadBackground();
 		backgroundImgPink = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG);
+
 	}
 
 	private void loadBackground() {
@@ -27,8 +28,7 @@ public class Menu extends State implements Statemethods {
 		menuWidth = (int) (backgroundImg.getWidth() * Game.SCALE);
 		menuHeight = (int) (backgroundImg.getHeight() * Game.SCALE);
 		menuX = Game.GAME_WIDTH / 2 - menuWidth / 2;
-		menuY = (int) (45 * Game.SCALE);
-
+		menuY = (int) (25 * Game.SCALE);
 	}
 
 	private void loadButtons() {
@@ -45,19 +45,11 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void draw(Graphics g) {
-		
 		g.drawImage(backgroundImgPink, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		
 		g.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
 
 		for (MenuButton mb : buttons)
 			mb.draw(g);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -67,7 +59,6 @@ public class Menu extends State implements Statemethods {
 				mb.setMousePressed(true);
 			}
 		}
-
 	}
 
 	@Override
@@ -76,14 +67,12 @@ public class Menu extends State implements Statemethods {
 			if (isIn(e, mb)) {
 				if (mb.isMousePressed())
 					mb.applyGamestate();
-				if(mb.getState() == Gamestate.PLAYING)
+				if (mb.getState() == Gamestate.PLAYING)
 					game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
 				break;
 			}
 		}
-
 		resetButtons();
-
 	}
 
 	private void resetButtons() {
@@ -107,8 +96,11 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
-			Gamestate.state = Gamestate.PLAYING;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 

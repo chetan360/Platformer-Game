@@ -7,7 +7,6 @@ import static utilz.Constants.UI.VolumeButtons.VOLUME_HEIGHT;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-import gamestates.Gamestate;
 import main.Game;
 
 public class AudioOptions {
@@ -16,7 +15,7 @@ public class AudioOptions {
 	private SoundButton musicButton, sfxButton;
 
 	private Game game;
-	
+
 	public AudioOptions(Game game) {
 		this.game = game;
 		createSoundButtons();
@@ -58,7 +57,7 @@ public class AudioOptions {
 			float valueBefore = volumeButton.getFloatValue();
 			volumeButton.changeX(e.getX());
 			float valueAfter = volumeButton.getFloatValue();
-			if(valueBefore != valueAfter)
+			if (valueBefore != valueAfter)
 				game.getAudioPlayer().setVolume(valueAfter);
 		}
 	}
@@ -78,6 +77,7 @@ public class AudioOptions {
 				musicButton.setMuted(!musicButton.isMuted());
 				game.getAudioPlayer().toggleSongMute();
 			}
+
 		} else if (isIn(e, sfxButton)) {
 			if (sfxButton.isMousePressed()) {
 				sfxButton.setMuted(!sfxButton.isMuted());
