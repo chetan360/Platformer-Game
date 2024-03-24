@@ -37,6 +37,7 @@ public class LoadSave {
 	public static final String QUESTION_ATLAS = "question_atlas.png";
 	public static final String EXCLAMATION_ATLAS = "exclamation_atlas.png";
 	public static final String SHARK_ATLAS = "shark_atlas.png";
+	public static final String CREDITS = "credits_list.png";
 	public static final String GRASS_ATLAS = "grass_atlas.png";
 	public static final String TREE_ONE_ATLAS = "tree_one_atlas.png";
 	public static final String TREE_TWO_ATLAS = "tree_two_atlas.png";
@@ -67,35 +68,32 @@ public class LoadSave {
 	public static BufferedImage[] GetAllLevels() {
 		URL url = LoadSave.class.getResource("/lvls");
 		File file = null;
-		
+
 		try {
 			file = new File(url.toURI());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		
-		File[] filesSorted = file.listFiles();
-		
-		//insertion sort
-		for(int i = 1; i < filesSorted.length; i++) {
-			file = filesSorted[i];
-			int j = i - 1;
-			while((filesSorted[j].getName().compareTo(file.getName()) > 0) && j >= 0) {
-				filesSorted[j + 1] = filesSorted[j];
-				j--;
+
+		File[] files = file.listFiles();
+		File[] filesSorted = new File[files.length];
+
+		for (int i = 0; i < filesSorted.length; i++)
+			for (int j = 0; j < files.length; j++) {
+				if (files[j].getName().equals((i + 1) + ".png"))
+					filesSorted[i] = files[j];
+
 			}
-			filesSorted[j + 1] = file;
-		}
-		
+
 		BufferedImage[] imgs = new BufferedImage[filesSorted.length];
-		
-		for(int i = 0; i < imgs.length; i++)
+
+		for (int i = 0; i < imgs.length; i++)
 			try {
 				imgs[i] = ImageIO.read(filesSorted[i]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
+
 		return imgs;
 	}
 
