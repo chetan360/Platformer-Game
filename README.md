@@ -62,6 +62,11 @@ and play
 ![Screenshot 6](Project-Images/rain.png)
 
 
+## Game Controls
+![Screenshot 7](Project-Images/controls.jpg)
+W is up, A is left, S is down, D is right and Space bar. Ring finger on A, middle finger on either W or S, index finger on D and thoumb on Space bar. And using right hand we can use mouse controls as left click for attack and right click for power attack.
+
+
 # Creadits
 - Arts : PIXELFROG
 - Sound : SONGS BY SVL SVLITCH.IO
