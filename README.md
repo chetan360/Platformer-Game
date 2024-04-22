@@ -17,7 +17,7 @@ Platformer video games have been around since the early
 for their enduring popularity is that they are easy to pick up 
 and play
 
-## Requirements for using it
+## Requirements for using it:
 - Need JDK and ids for running the game (project).
 - Any OS.
 - Processor: 2.4 GHz Dual Core.
@@ -28,12 +28,52 @@ and play
 
 
 ## How to run the Game ?
-- Clone or Download file from <a href="https://github.com/chetan360/Platformer-Game/tree/ep28_final"> Here.</a>
-- Import it in any IDE. (Make sure the Java is installed and configured on your Device).
-- Built the project after import.
-- Run the Project using MainClass.
-- Play and enjoy.
+This repository contains a platformer game developed in Java.
+Follow the instructions below to set up and run the game using different
+Integrated Development Environments (IDEs) such as Apache NetBeans, 
+Visual Studio Code (VS Code), and Eclipse IDE.<br><br>
 
+<b>Clone using Git:</b>
+
+```
+git clone https://github.com/chetan360/Platformer-Game
+```
+Or download the ZIP file from the GitHub repository page.
+
+### Setting Up the Game:
+<b>Apache NetBeans:</b>
+- Open Apache NetBeans.
+- Import the project:
+   Select File > Import Project > Eclipse Project.
+   Choose the project folder (Platformer-Game) and set the destination folder.
+   Ignore project dependencies if prompted.
+- Set the source/binary format:
+   Right-click on the project > Properties > Sources.
+   Under "Source/Binary Format," select the appropriate JDK version (e.g., JDK 11).
+- Clean and build the project.
+- Run the project and select the main class (main.MainClass).
+
+<b>Visual Studio Code (VS Code):</b>
+- Open VS Code.
+- Open the project folder (Platformer-Game):
+  Go to File > Open Folder... and select the project folder.
+  Install the Java Extension Pack if not already installed.
+- Set the JDK version.
+- Run the project by navigating to the main class (MainClass.java) and selecting Run Java.
+
+<b>Eclipse IDE:</b>
+- Open Eclipse IDE.
+- Import the project:
+  Go to File > Import... > General > Existing Projects into Workspace.
+  Select the project folder (Platformer-Game) and import it into Eclipse.
+- Set the Java Build Path if necessary.
+- Run the project by right-clicking on the main class and selecting Run As > Java Application.
+Enjoy the Game!<br><br>
+<b>After following these steps, you should be able to run the Platformer Game and enjoy playing it. If you encounter any issues or have questions, feel free to reach out for assistance:</b>
+
+```
+chetansmankar360@gmail.com
+```
 
 ## Screenshots 🖼️
 
@@ -64,7 +104,7 @@ and play
 
 ## Game Controls
 ![Screenshot 7](Project-Images/controls.jpg)
-W is up, A is left, S is down, D is right and Space bar. Ring finger on A, middle finger on either W or S, index finger on D and thoumb on Space bar. And using right hand we can use mouse controls as left click for attack and right click for power attack.
+<b>W is up, A is left, S is down, D is right and Space bar. Ring finger on A, middle finger on either W or S, index finger on D and thoumb on Space bar. And using right hand we can use mouse controls as left click for attack and right click for power attack.</b>
 
 
 # Creadits
