@@ -70,10 +70,7 @@ Or download the ZIP file from the GitHub repository page.
 - Run the project by right-clicking on the main class and selecting Run As > Java Application.
 Enjoy the Game!<br><br>
 <b>After following these steps, you should be able to run the Platformer Game and enjoy playing it. If you encounter any issues or have questions, feel free to reach out for assistance:</b>
-
-```
-chetansmankar360@gmail.com
-```
+(chetansmankar360@gmail.com).
 
 ## Screenshots 🖼️
 
